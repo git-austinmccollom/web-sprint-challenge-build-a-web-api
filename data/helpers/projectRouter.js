@@ -53,4 +53,16 @@ router.delete("/:id", (req, res) => {
     })
 })
 
+//request handlers that involve actions
+
+router.post("/:id/actions", (req, res) => {
+    actionFunctions.insert(req.body)
+    .then( dbRes => {
+        res.status(201).json(dbRes);
+    })
+    .catch( dbErr => {
+        res.status(500).json(dbErr);
+    })
+})
+
 module.exports = router;
