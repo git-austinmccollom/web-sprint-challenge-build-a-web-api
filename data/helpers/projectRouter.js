@@ -33,4 +33,14 @@ router.post("/", (req, res) => {
     })
 })
 
+router.put("/:id", (req, res) => {
+    postFunctions.update(req.params.id, req.body)
+    .then( dbRes => {
+        res.status(201).json(dbRes);
+    })
+    .catch( dbErr => {
+        res.status(500).json(dbErr);
+    })
+})
+
 module.exports = router;
