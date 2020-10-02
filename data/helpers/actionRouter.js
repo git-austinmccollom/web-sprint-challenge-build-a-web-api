@@ -23,7 +23,7 @@ router.get("/:id", (req, res) => {
     })
 })
 
-router.post("/", (req, res) => {    
+router.post("/", validateAction, (req, res) => {    
     actionFunctions.insert(req.body)
     .then( dbRes => {
         res.status(201).json(dbRes);
@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
     })
 })
 
-router.put("/:id", (req, res) => {    
+router.put("/:id", validateAction, (req, res) => {    
     actionFunctions.update(req.params.id, req.body)
     .then( dbRes => {
         res.status(202).json(dbRes);
@@ -52,5 +52,15 @@ router.delete("/:id", (req, res) => {
         res.status(500).json(dbErr);
     })
 })
+
+//middleware
+
+function validateAction(req, res, next) {
+    if (req.body.description && req.body.notes && req.body.project_id) {
+      next();
+    } else {
+      res.status(400).json({ message: "missing description, notes, or project_id in body" });
+    }
+  }
 
 module.exports = router;
