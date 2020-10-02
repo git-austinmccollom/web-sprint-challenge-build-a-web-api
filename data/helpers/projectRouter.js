@@ -23,6 +23,16 @@ router.get("/:id", (req, res) => {
     })
 })
 
+router.get("/:id/actions", (req, res) => {
+    postFunctions.getProjectActions(req.params.id)
+    .then( dbRes => {
+        res.status(200).json(dbRes);
+    })
+    .catch( dbErr => {
+        res.status(500).json(dbErr);
+    })
+})
+
 router.post("/", (req, res) => {
     postFunctions.insert(req.body)
     .then( dbRes => {
