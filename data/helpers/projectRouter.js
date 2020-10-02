@@ -13,4 +13,14 @@ router.get("/", (req, res) => {
     })
 })
 
+router.get("/:id", (req, res) => {
+    postFunctions.get(req.params.id)
+    .then( dbRes => {
+        res.status(200).json(dbRes);
+    })
+    .catch( dbErr => {
+        res.status(500).json(dbErr);
+    })
+})
+
 module.exports = router;
